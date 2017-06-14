@@ -79,7 +79,7 @@ class AquaPOS(unittest.TestCase):
                 self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
                                                   '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "3")]')
             )
-            ;
+
             el1 = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
                                                     '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]')
             el1_name = el1.find_element_by_id('com.udev.alidemirel.aquapos:id/productName')
@@ -96,8 +96,6 @@ class AquaPOS(unittest.TestCase):
 
             else:
                 k = 0
-
-
 
     def tearDown(self):
         self.driver.quit()
