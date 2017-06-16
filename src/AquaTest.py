@@ -14,8 +14,8 @@ class AquaPOS(unittest.TestCase):
     def setUp(self):
         desired_caps = {
             'platformName': 'Android',
-            'platformVersion': '5.1',
-            'deviceName': 'Lenovo',
+            'platformVersion': '6.0',
+            'deviceName': 'Samsung',
             'app': 'C:/Users/bogda/PycharmProjects/AquaPOSTest/src/AquaPOS.apk',
             'appPackage': 'com.udev.alidemirel.aquapos',
             'appActivity': 'activities.Register'
@@ -105,7 +105,12 @@ class AquaPOS(unittest.TestCase):
 
         cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                        '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
-        print(len(cart_list))
+        for l in range(len(cart_list)):
+            quantity = randint(1, 10)
+            cart_product = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
+                                                             '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(l)))
+            for m in range(quantity):
+                cart_product.find_element_by_id('com.udev.alidemirel.aquapos:id/addProduct').click()
 
     def tearDown(self):
         self.driver.quit()
