@@ -14,8 +14,8 @@ class AquaPOS(unittest.TestCase):
     def setUp(self):
         desired_caps = {
             'platformName': 'Android',
-            'platformVersion': '6.0',
-            'deviceName': 'Samsung',
+            'platformVersion': '5.1',
+            'deviceName': 'Lenovo',
             'app': 'C:/Users/bogda/PycharmProjects/AquaPOSTest/src/AquaPOS.apk',
             'appPackage': 'com.udev.alidemirel.aquapos',
             'appActivity': 'activities.Register'
@@ -55,19 +55,23 @@ class AquaPOS(unittest.TestCase):
                                                               '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
             rand_products = randint(1, len(product_list))
 
+            list = []
+
             # Place a random number of products in the shopping cart
             for j in range(rand_products):
                 rand_product = randint(1, len(product_list)) - 1
                 product = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout'
                                                             '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(rand_product)))
-                product.click()
+                product_name = product.find_element_by_id('com.udev.alidemirel.aquapos:id/itemName').get_attribute('text')
+                if product_name not in list:
+                    list.append(product_name)
+                    product.click()
+                print(list)
 
             self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnBackToCategories').click()
             sleep(2)
 
         # Scroll to the beginning of the Shopping Cart list
-        # cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
-        #                                                '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
         k = True
         while k:
             el1_aux = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
@@ -78,7 +82,7 @@ class AquaPOS(unittest.TestCase):
                 self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                   '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]'),
                 self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
-                                                  '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "3")]')
+                                                  '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "2")]')
             )
 
             el1 = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
@@ -93,11 +97,15 @@ class AquaPOS(unittest.TestCase):
                     self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                       '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]'),
                     self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
-                                                      '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "3")]')
+                                                      '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "2")]')
                 )
 
             else:
                 k = False
+
+        cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
+                                                       '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
+        print(len(cart_list))
 
     def tearDown(self):
         self.driver.quit()
