@@ -51,51 +51,53 @@ class AquaPOS(unittest.TestCase):
             self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout'
                                               '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(i))).click()
             # Find the number of products
-            product_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout'
+            product_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
                                                               '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
             rand_products = randint(1, len(product_list))
 
             # Place a random number of products in the shopping cart
             for j in range(rand_products):
+                rand_product = randint(1, len(product_list)) - 1
                 product = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout'
-                                                            '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(j)))
+                                                            '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(rand_product)))
                 product.click()
 
             self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnBackToCategories').click()
             sleep(2)
 
         # Scroll to the beginning of the Shopping Cart list
-        cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
-                                                       '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
-        k = 1
-        while k == 1:
-            el1_aux = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+        # cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+        #                                                '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
+        k = True
+        while k:
+            el1_aux = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                         '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]')
-            el1_aux_name = el1_aux.find_element_by_id('com.udev.alidemirel.aquapos:id/productName')
+            el1_aux_name = el1_aux.find_element_by_id('com.udev.alidemirel.aquapos:id/productName').get_attribute('text')
 
             self.driver.scroll(
-                self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+                self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                   '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]'),
-                self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+                self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                   '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "3")]')
             )
 
             el1 = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
                                                     '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]')
-            el1_name = el1.find_element_by_id('com.udev.alidemirel.aquapos:id/productName')
+            el1_name = el1.find_element_by_id('com.udev.alidemirel.aquapos:id/productName').get_attribute('text')
 
             el1_aux = el1
 
+            # Verify if the old first element is the same as the new first element
             if el1_name != el1_aux_name:
                 self.driver.scroll(
-                    self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+                    self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                       '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "0")]'),
-                    self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[1]'
+                    self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                       '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "3")]')
                 )
 
             else:
-                k = 0
+                k = False
 
     def tearDown(self):
         self.driver.quit()
