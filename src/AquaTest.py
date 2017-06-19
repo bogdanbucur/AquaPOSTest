@@ -23,6 +23,9 @@ class AquaPOS(unittest.TestCase):
 
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
+    def tearDown(self):
+        self.driver.quit()
+
     # def test_1(self):
     #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').click()
     #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').send_keys('ebf58e09-84bb-37d3-b4d0-e7fc2ea270e1')
@@ -66,7 +69,6 @@ class AquaPOS(unittest.TestCase):
                 if product_name not in list:
                     list.append(product_name)
                     product.click()
-                print(list)
 
             self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnBackToCategories').click()
             sleep(2)
@@ -105,15 +107,25 @@ class AquaPOS(unittest.TestCase):
 
         cart_list = self.driver.find_elements_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
                                                        '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout')
-        for l in range(len(cart_list)):
-            quantity = randint(1, 10)
-            cart_product = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
-                                                             '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(l)))
-            for m in range(quantity):
-                cart_product.find_element_by_id('com.udev.alidemirel.aquapos:id/addProduct').click()
+        cart_size = self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/cartListSize').get_attribute('text')
 
-    def tearDown(self):
-        self.driver.quit()
+        if len(cart_list) < int(cart_size):
+            for l in range(int(cart_size)):
+                quantity = randint(1, 10)
+                cart_product = self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
+                                                                 '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(str(l)))
+                for m in range(quantity):
+                    cart_product.find_element_by_id('com.udev.alidemirel.aquapos:id/addProduct').click()
+
+                if l > (len(cart_list) - 1):
+                    self.driver.scroll(
+                        self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
+                                                          '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(len(cart_list) - 1)),
+                        self.driver.find_element_by_xpath('//android.support.v4.widget.DrawerLayout/android.widget.LinearLayout/android.widget.LinearLayout[contains(@index, "1")]'
+                                                          '/android.support.v7.widget.RecyclerView/android.widget.LinearLayout[contains(@index, "{0}")]'.format(len(cart_list) - 2)))
+                    )
+
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(AquaPOS)
