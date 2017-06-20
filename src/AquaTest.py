@@ -14,20 +14,20 @@ class AquaPOS(unittest.TestCase):
     def setUp(self):
         desired_caps = {
             'platformName': 'Android',
-            'platformVersion': '6.0',
-            'deviceName': 'Samsung',
+            'platformVersion': '5.1',
+            'deviceName': 'Nexus 9 API 22',
+            'browserName': '',
             'app': '/Users/bogdanbucur/PycharmProjects/AquaPOSTest/src/AquaPOS.apk',
             'appPackage': 'com.udev.alidemirel.aquapos',
-            'appActivity': 'activities.Register',
-            'newCommandTimeout': '30'
+            'appActivity': 'activities.Register'
         }
 
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
-    # def test_1(self):
-    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').click()
-    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').send_keys('ebf58e09-84bb-37d3-b4d0-e7fc2ea270e1')
-    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnRegister').click()
+    def test_1(self):
+        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').click()
+        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').send_keys('ebf58e09-84bb-37d3-b4d0-e7fc2ea270e1')
+        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnRegister').click()
 
     def test_2(self):
         self.driver.find_element_by_name('User Carrefour 2').click()
