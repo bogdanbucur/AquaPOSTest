@@ -14,10 +14,9 @@ class AquaPOS(unittest.TestCase):
     def setUp(self):
         desired_caps = {
             'platformName': 'Android',
-            'platformVersion': '5.1',
-            'deviceName': 'Nexus 9 API 22',
-            'browserName': '',
-            'app': '/Users/bogdanbucur/PycharmProjects/AquaPOSTest/src/AquaPOS.apk',
+            'platformVersion': '6.0',
+            'deviceName': 'Pixel C API 23',
+            'app': 'C:\Users\Bogdan Bucur\PycharmProjects\AquaPOSTest\src\AquaPOS.apk',
             'appPackage': 'com.udev.alidemirel.aquapos',
             'appActivity': 'activities.Register'
         }
@@ -29,11 +28,11 @@ class AquaPOS(unittest.TestCase):
         self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/codeText').send_keys('ebf58e09-84bb-37d3-b4d0-e7fc2ea270e1')
         self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnRegister').click()
 
-    def test_2(self):
-        self.driver.find_element_by_name('User Carrefour 2').click()
-        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/userPin').click()
-        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/userPin').send_keys('0000')
-        self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnLogin').click()
+    # def test_2(self):
+    #     self.driver.find_element_by_name('User Carrefour 2').click()
+    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/userPin').click()
+    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/userPin').send_keys('0000')
+    #     self.driver.find_element_by_id('com.udev.alidemirel.aquapos:id/bttnLogin').click()
 
     # def test_3(self):
     #     sleep(2)
